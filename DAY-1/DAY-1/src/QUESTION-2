@@ -1,0 +1,108 @@
+
+
+
+    mysql> CREATE TABLE STUDENT(NAME VARCHAR(20),ROLLNO INT, BRANCH VARCHAR(20),CITY VARCHAR(20));
+    Query OK, 0 rows affected (0.55 sec)
+
+    mysql> INSERT INTO STUDENT VALUES("VIJAYA",150,"CSE","CHENNAI");
+    Query OK, 1 row affected (0.04 sec)
+
+    mysql> INSERT INTO STUDENT VALUES("SITA",202,"ETC","KOLKATA"),
+        -> ("RAVI",300,"EEE","DELHI"),
+        -> ("BASU",165,"ETC","CHENNAI"),
+        -> ("RASMI",107,"ETC","RKL"),
+        -> ("KARAN",111,"CSE","CTC"),
+        -> ("REKHA",117,"BME","BBSR");
+    Query OK, 6 rows affected (0.01 sec)
+    Records: 6  Duplicates: 0  Warnings: 0
+
+    mysql> SELECT * FROM STUDENT;
+    +--------+--------+--------+---------+
+    | NAME   | ROLLNO | BRANCH | CITY    |
+    +--------+--------+--------+---------+
+    | VIJAYA |    150 | CSE    | CHENNAI |
+    | SITA   |    202 | ETC    | KOLKATA |
+    | RAVI   |    300 | EEE    | DELHI   |
+    | BASU   |    165 | ETC    | CHENNAI |
+    | RASMI  |    107 | ETC    | RKL     |
+    | KARAN  |    111 | CSE    | CTC     |
+    | REKHA  |    117 | BME    | BBSR    |
+    +--------+--------+--------+---------+
+    7 rows in set (0.00 sec)
+
+    1. Count the number of students of each department.
+
+    mysql> SELECT BRANCH, COUNT(*) FROM STUDENT GROUP BY BRANCH;
+    +--------+----------+
+    | BRANCH | COUNT(*) |
+    +--------+----------+
+    | CSE    |        2 |
+    | ETC    |        3 |
+    | EEE    |        1 |
+    | BME    |        1 |
+    +--------+----------+
+    4 rows in set (0.01 sec)
+Count the number of students of each department where the department name starts with ‘E’.
+
+    mysql> SELECT BRANCH, COUNT(*) FROM STUDENT WHERE BRANCH LIKE "E%";
+    +--------+----------+
+    | BRANCH | COUNT(*) |
+    +--------+----------+
+    | ETC    |        4 |
+    +--------+----------+
+    1 row in set (0.00 sec)
+    3. Add a field called MARKS to the table STUDENT which can hold a number upto 8 digit length.
+
+    mysql> ALTER TABLE STUDENT ADD NUMBER INT(8);
+    Query OK, 0 rows affected, 1 warning (0.09 sec)
+    Records: 0  Duplicates: 0  Warnings: 1
+
+    mysql> SELECT * FROM STUDENT;
+    +--------+--------+--------+---------+--------+
+    | NAME   | ROLLNO | BRANCH | CITY    | NUMBER |
+    +--------+--------+--------+---------+--------+
+    | VIJAYA |    150 | CSE    | CHENNAI |   NULL |
+    | SITA   |    202 | ETC    | KOLKATA |   NULL |
+    | RAVI   |    300 | EEE    | DELHI   |   NULL |
+    | BASU   |    165 | ETC    | CHENNAI |   NULL |
+    | RASMI  |    107 | ETC    | RKL     |   NULL |
+    | KARAN  |    111 | CSE    | CTC     |   NULL |
+    | REKHA  |    117 | BME    | BBSR    |   NULL |
+    +--------+--------+--------+---------+--------+
+    7 rows in set (0.00 sec)
+
+    4. Modify the field :”NAME” of the table STUDENT to hold a maximum of 25 character.
+
+    mysql> ALTER TABLE STUDENT MODIFY NAME VARCHAR(25);
+    Query OK, 0 rows affected (0.03 sec)
+    Records: 0  Duplicates: 0  Warnings: 0
+
+    5. Delete all rows from the table STUDENT where branch is ETC.
+
+    mysql> DELETE FROM STUDENT WHERE BRANCH="ETC";
+    Query OK, 3 rows affected (0.01 sec)
+
+    mysql> SELECT * FROM STUDENT;
+    +--------+--------+--------+---------+--------+
+    | NAME   | ROLLNO | BRANCH | CITY    | NUMBER |
+    +--------+--------+--------+---------+--------+
+    | VIJAYA |    150 | CSE    | CHENNAI |   NULL |
+    | RAVI   |    300 | EEE    | DELHI   |   NULL |
+    | KARAN  |    111 | CSE    | CTC     |   NULL |
+    | REKHA  |    117 | BME    | BBSR    |   NULL |
+    +--------+--------+--------+---------+--------+
+    4 rows in set (0.00 sec)
+   6. Rename the table STUDENT to STUDINFORMATION.
+    mysql> ALTER TABLE STUDENT RENAME TO STUDENT_INFORMATION;
+    Query OK, 0 rows affected (0.04 sec)
+
+   7. Delete all the data part from the table STUDENT.
+
+    mysql> TRUNCATE TABLE STUDENT_INFORMATION;
+    Query OK, 0 rows affected (0.04 sec)
+
+8. Destroy the table STUDENT.
+    mysql> DROP TABLE STUDENT_INFORMATION;
+    Query OK, 0 rows affected (0.04 sec)
+
+    mysql>

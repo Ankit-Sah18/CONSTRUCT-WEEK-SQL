@@ -1,0 +1,254 @@
+
+
+
+   mysql> use project_day_1;
+   Database changed
+  2. Describe the tables which are already created.
+   mysql> desc deposit; desc branch; desc customer;
+   +---------+-------------+------+-----+---------+-------+
+   | Field   | Type        | Null | Key | Default | Extra |
+   +---------+-------------+------+-----+---------+-------+
+   | ANUMBER | varchar(25) | YES  |     | NULL    |       |
+   | CNAME   | varchar(20) | YES  |     | NULL    |       |
+   | BNAME   | varchar(20) | YES  |     | NULL    |       |
+   | AMOUNT  | int         | YES  |     | NULL    |       |
+   | ADATE   | date        | YES  |     | NULL    |       |
+   +---------+-------------+------+-----+---------+-------+
+   5 rows in set (0.06 sec)
+
+   +-------+-------------+------+-----+---------+-------+
+   | Field | Type        | Null | Key | Default | Extra |
+   +-------+-------------+------+-----+---------+-------+
+   | BNAME | varchar(20) | YES  |     | NULL    |       |
+   | CITY  | varchar(20) | YES  |     | NULL    |       |
+   +-------+-------------+------+-----+---------+-------+
+   2 rows in set (0.00 sec)
+
+   +-------+-------------+------+-----+---------+-------+
+   | Field | Type        | Null | Key | Default | Extra |
+   +-------+-------------+------+-----+---------+-------+
+   | CNAME | varchar(20) | YES  |     | NULL    |       |
+   | CITY  | varchar(20) | YES  |     | NULL    |       |
+   +-------+-------------+------+-----+---------+-------+
+   2 rows in set (0.00 sec)
+   4.Retrieve all the records from the table BORROW where amount in between
+      2000 and 3000--
+   mysql> select * from borrow where amount  between 2000 and 3000;
+   +---------+---------+---------+--------+
+   | LOANNUM | CNAME   | BNAME   | AMOUNT |
+   +---------+---------+---------+--------+
+   | 311     | SUNIL   | MGROAD  |   3000 |
+   | 321     | MADHURI | CHANDNI |   2000 |
+   +---------+---------+---------+--------+
+   2 rows in set (0.01 sec)
+
+  5. Retrieve the details from the table DEPOSIT
+   mysql> select * from deposit;
+   +---------+---------+-----------+--------+------------+
+   | ANUMBER | CNAME   | BNAME     | AMOUNT | ADATE      |
+   +---------+---------+-----------+--------+------------+
+   | 100     | ANIL    | VARCE     |   1000 | 1995-03-01 |
+   | 101     | SUNIL   | MGROAD    |   5000 | 1996-01-17 |
+   | 102     | RAHUL   | KAROLBAGH |   3500 | 1995-11-17 |
+   | 103     | MADHURI | CHANDNI   |   1200 | 1995-12-17 |
+   | 104     | PARMOD  | MGROAD    |   3000 | 1996-03-27 |
+   | 105     | SANDIP  | KAROLBAGH |   2000 | 1996-03-31 |
+   +---------+---------+-----------+--------+------------+
+   6 rows in set (0.00 sec)
+
+   7. Retrieve the name of the customer living in NAGPUR.
+
+   mysql> select cname from customer where city="NAGPUR";
+   +---------+
+   | cname   |
+   +---------+
+   | MADHURI |
+   | PARMOD  |
+   +---------+
+   2 rows in set (0.00 sec)
+
+   8. Retrieve the name of the customers who opened account after 17-NOV-95.
+
+   mysql> select cname from deposit where ADATE >"1995-11-17";
+   +---------+
+   | cname   |
+   +---------+
+   | SUNIL   |
+   | MADHURI |
+   | PARMOD  |
+   | SANDIP  |
+   +---------+
+   4 rows in set (0.00 sec)
+
+   9. Retrieve the account number and amount of the customer having account opened between
+   01-12-95 and 01-06.96.
+
+   mysql> SELECT ANUMBER,AMOUNT FROM DEPOSIT WHERE ADATE BETWEEN "1995-12-01" AND "1996-06-01";
+   +---------+--------+
+   | ANUMBER | AMOUNT |
+   +---------+--------+
+   | 101     |   5000 |
+   | 103     |   1200 |
+   | 104     |   3000 |
+   | 105     |   2000 |
+   +---------+--------+
+   4 rows in set (0.00 sec)
+
+   10. Retrieve all the records from the table DEPOSIT where CNAME begins
+   with C.
+
+   mysql> SELECT * FROM DEPOSIT WHERE CNAME LIKE "C_%";
+   Empty set (0.00 sec)
+
+   11. Retrieve all the records from the table BORROW where 2nd character of
+   CNAME is U.
+
+   mysql> SELECT * FROM BORROW WHERE CNAME LIKE "_U%";
+   +---------+-------+--------+--------+
+   | LOANNUM | CNAME | BNAME  | AMOUNT |
+   +---------+-------+--------+--------+
+   | 311     | SUNIL | MGROAD |   3000 |
+   +---------+-------+--------+--------+
+   1 row in set (0.00 sec)
+
+   12. Retrieve all the records from the table DEPOSIT where branch name is
+   CHANDNI or MGROAD.
+
+
+   mysql> SELECT * FROM DEPOSIT WHERE BNAME= "CHANDNI" OR BNAME="MGROAD";
+   +---------+---------+---------+--------+------------+
+   | ANUMBER | CNAME   | BNAME   | AMOUNT | ADATE      |
+   +---------+---------+---------+--------+------------+
+   | 101     | SUNIL   | MGROAD  |   5000 | 1996-01-17 |
+   | 103     | MADHURI | CHANDNI |   1200 | 1995-12-17 |
+   | 104     | PARMOD  | MGROAD  |   3000 | 1996-03-27 |
+   +---------+---------+---------+--------+------------+
+   3 rows in set (0.00 sec)
+
+
+    13. Retrieve all the records from the table DEPOSIT where branch name is not
+      CHANDNI or MGROAD.
+
+   mysql> SELECT * FROM DEPOSIT WHERE BNAME != "CHANDNI" AND BNAME !="MGROAD";
+   +---------+--------+-----------+--------+------------+
+   | ANUMBER | CNAME  | BNAME     | AMOUNT | ADATE      |
+   +---------+--------+-----------+--------+------------+
+   | 100     | ANIL   | VARCE     |   1000 | 1995-03-01 |
+   | 102     | RAHUL  | KAROLBAGH |   3500 | 1995-11-17 |
+   | 105     | SANDIP | KAROLBAGH |   2000 | 1996-03-31 |
+   +---------+--------+-----------+--------+------------+
+   3 rows in set (0.00 sec)
+
+   14. Retrieve all the records from DEPOSIT where amount > 1000 and arrange the customer name in
+   ascending order
+
+
+   mysql> SELECT * FROM DEPOSIT WHERE AMOUNT > 1000 ORDER BY CNAME;
+   +---------+---------+-----------+--------+------------+
+   | ANUMBER | CNAME   | BNAME     | AMOUNT | ADATE      |
+   +---------+---------+-----------+--------+------------+
+   | 103     | MADHURI | CHANDNI   |   1200 | 1995-12-17 |
+   | 104     | PARMOD  | MGROAD    |   3000 | 1996-03-27 |
+   | 102     | RAHUL   | KAROLBAGH |   3500 | 1995-11-17 |
+   | 105     | SANDIP  | KAROLBAGH |   2000 | 1996-03-31 |
+   | 101     | SUNIL   | MGROAD    |   5000 | 1996-01-17 |
+   +---------+---------+-----------+--------+------------+
+   5 rows in set (0.00 sec)
+
+   15. Retrieve all the records from DEPOSIT where amount > 1000 and arrange the customer name in
+   descending order.
+
+
+   mysql> SELECT * FROM DEPOSIT WHERE AMOUNT > 1000 ORDER BY CNAME DESC;
+   +---------+---------+-----------+--------+------------+
+   | ANUMBER | CNAME   | BNAME     | AMOUNT | ADATE      |
+   +---------+---------+-----------+--------+------------+
+   | 101     | SUNIL   | MGROAD    |   5000 | 1996-01-17 |
+   | 105     | SANDIP  | KAROLBAGH |   2000 | 1996-03-31 |
+   | 102     | RAHUL   | KAROLBAGH |   3500 | 1995-11-17 |
+   | 104     | PARMOD  | MGROAD    |   3000 | 1996-03-27 |
+   | 103     | MADHURI | CHANDNI   |   1200 | 1995-12-17 |
+   +---------+---------+-----------+--------+------------+
+   5 rows in set (0.00 sec)
+
+   16. Retrieve customer details from BORROW table where the third character of
+   the customer name is either ‘A’ or ‘D’.
+
+   mysql> SELECT * FROM BORROW WHERE CNAME LIKE "__A%" OR CNAME LIKE "__D%";
+   +---------+---------+---------+--------+
+   | LOANNUM | CNAME   | BNAME   | AMOUNT |
+   +---------+---------+---------+--------+
+   | 321     | MADHURI | CHANDNI |   2000 |
+   +---------+---------+---------+--------+
+   1 row in set (0.00 sec)
+
+   17. Retrieve all the records from the table BORROW where amount is not
+   between 2000 and 8000.
+
+   mysql> SELECT * FROM BORROW WHERE AMOUNT NOT BETWEEN 2000 AND 8000;
+   +---------+-------+-------+--------+
+   | LOANNUM | CNAME | BNAME | AMOUNT |
+   +---------+-------+-------+--------+
+   | 201     | ANIL  | VARCE |   1000 |
+   +---------+-------+-------+--------+
+   1 row in set (0.00 sec)
+
+   18. Find out the unique records from the table DEPOSIT
+
+   mysql> SELECT DISTINCT ANUMBER,CNAME,BNAME,AMOUNT,ADATE FROM DEPOSIT;
+   +---------+---------+-----------+--------+------------+
+   | ANUMBER | CNAME   | BNAME     | AMOUNT | ADATE      |
+   +---------+---------+-----------+--------+------------+
+   | 100     | ANIL    | VARCE     |   1000 | 1995-03-01 |
+   | 101     | SUNIL   | MGROAD    |   5000 | 1996-01-17 |
+   | 102     | RAHUL   | KAROLBAGH |   3500 | 1995-11-17 |
+   | 103     | MADHURI | CHANDNI   |   1200 | 1995-12-17 |
+   | 104     | PARMOD  | MGROAD    |   3000 | 1996-03-27 |
+   | 105     | SANDIP  | KAROLBAGH |   2000 | 1996-03-31 |
+   +---------+---------+-----------+--------+------------+
+   6 rows in set (0.00 sec)
+
+
+  19. Update the amount of all depositors in deposit table by giving them 10% interest (i.e.
+  amount=amount * 0.1) where branch is VRCE.
+
+
+   mysql> update deposit set amount = amount*0.1 where bname = 'VARCE';
+   Query OK, 1 row affected (0.04 sec)
+   Rows matched: 1  Changed: 1  Warnings: 0
+
+   mysql> SELECT * FROM DEPOSIT;
+   +---------+---------+-----------+--------+------------+
+   | ANUMBER | CNAME   | BNAME     | AMOUNT | ADATE      |
+   +---------+---------+-----------+--------+------------+
+   | 100     | ANIL    | VARCE     |    100 | 1995-03-01 |
+   | 101     | SUNIL   | MGROAD    |   5000 | 1996-01-17 |
+   | 102     | RAHUL   | KAROLBAGH |   3500 | 1995-11-17 |
+   | 103     | MADHURI | CHANDNI   |   1200 | 1995-12-17 |
+   | 104     | PARMOD  | MGROAD    |   3000 | 1996-03-27 |
+   | 105     | SANDIP  | KAROLBAGH |   2000 | 1996-03-31 |
+   +---------+---------+-----------+--------+------------+
+   6 rows in set (0.00 sec)
+
+   20. Update the amount of all depositors in deposit table by giving them 10% interest where
+   branch is VRCE and customer name ANIL.
+
+
+   mysql> UPDATE DEPOSIT SET AMOUNT= AMOUNT+(AMOUNT*10/100) WHERE BNAME="VARCE" AND CNAME="ANIL";
+   Query OK, 1 row affected (0.01 sec)
+   Rows matched: 1  Changed: 1  Warnings: 0
+
+   mysql> SELECT * FROM DEPOSIT;
+   +---------+---------+-----------+--------+------------+
+   | ANUMBER | CNAME   | BNAME     | AMOUNT | ADATE      |
+   +---------+---------+-----------+--------+------------+
+   | 100     | ANIL    | VARCE     |    110 | 1995-03-01 |
+   | 101     | SUNIL   | MGROAD    |   5000 | 1996-01-17 |
+   | 102     | RAHUL   | KAROLBAGH |   3500 | 1995-11-17 |
+   | 103     | MADHURI | CHANDNI   |   1200 | 1995-12-17 |
+   | 104     | PARMOD  | MGROAD    |   3000 | 1996-03-27 |
+   | 105     | SANDIP  | KAROLBAGH |   2000 | 1996-03-31 |
+   +---------+---------+-----------+--------+------------+
+   6 rows in set (0.00 sec)
+
+   mysql>
