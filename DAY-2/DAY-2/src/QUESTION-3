@@ -1,0 +1,111 @@
+
+
+
+   mysql> create table employeeDetails(empId int,FullName varchar(20),ManagerId int, DateOfJoining Date, City varchar(20));
+   Query OK, 0 rows affected (0.04 sec)
+
+   mysql> insert into employeedetails values(121,"John Show", 321,"2014-01-31","Toronto"),
+       -> (321,"Walter White",986,"2015-01-30","California"),
+       -> (421,"Kuldeep Rana",876,"2016-11-27","New Delhi");
+   Query OK, 3 rows affected (0.01 sec)
+   Records: 3  Duplicates: 0  Warnings: 0
+
+   mysql> create table EmployeeSalary(empId int, project varchar(5),Salary int, Variable int);
+   Query OK, 0 rows affected (0.02 sec)
+
+   mysql> insert into employeeSalary values(121,"p1",8000,500),
+       -> (321,"p2",10000,1000),
+       -> (421,"p1",12000,0);
+   Query OK, 3 rows affected (0.01 sec)
+   Records: 3  Duplicates: 0  Warnings: 0
+
+   mysql> select * from employeeDetails; select * from employeesalary;
+   +-------+--------------+-----------+---------------+------------+
+   | empId | FullName     | ManagerId | DateOfJoining | City       |
+   +-------+--------------+-----------+---------------+------------+
+   |   121 | John Show    |       321 | 2014-01-31    | Toronto    |
+   |   321 | Walter White |       986 | 2015-01-30    | California |
+   |   421 | Kuldeep Rana |       876 | 2016-11-27    | New Delhi  |
+   +-------+--------------+-----------+---------------+------------+
+   3 rows in set (0.00 sec)
+
+   +-------+---------+--------+----------+
+   | empId | project | Salary | Variable |
+   +-------+---------+--------+----------+
+   |   121 | p1      |   8000 |      500 |
+   |   321 | p2      |  10000 |     1000 |
+   |   421 | p1      |  12000 |        0 |
+   +-------+---------+--------+----------+
+   3 rows in set (0.00 sec)
+
+   1. Write an SQL query to fetch the employees whose name begins with any two characters, followed by a text “hn” and ending with any
+   sequence of characters.
+
+
+   mysql> select fullname from employeedetails where fullname like '__hn%';
+   +-----------+
+   | fullname  |
+   +-----------+
+   | John Show |
+   +-----------+
+   1 row in set (0.00 sec)
+
+   2. Write an SQL query to fetch common records between two tables.
+
+
+   mysql> select * from employeedetails s, employeesalary e where s.empid=e.empid;
+   +-------+--------------+-----------+---------------+------------+-------+---------+--------+----------+
+   | empId | FullName     | ManagerId | DateOfJoining | City       | empId | project | Salary | Variable |
+   +-------+--------------+-----------+---------------+------------+-------+---------+--------+----------+
+   |   121 | John Show    |       321 | 2014-01-31    | Toronto    |   121 | p1      |   8000 |      500 |
+   |   321 | Walter White |       986 | 2015-01-30    | California |   321 | p2      |  10000 |     1000 |
+   |   421 | Kuldeep Rana |       876 | 2016-11-27    | New Delhi  |   421 | p1      |  12000 |        0 |
+   +-------+--------------+-----------+---------------+------------+-------+---------+--------+----------+
+   3 rows in set (0.00 sec)
+
+
+   mysql> insert into employeedetails values(333,"Ankit Sah",001,"2020-01-01","Patna");
+   Query OK, 1 row affected (0.00 sec)
+
+   3. Write an SQL query to fetch records that are present in one table but not in another table
+
+   mysql> select * from employeedetails where empid not in (select empid from employeesalary);
+   +-------+-----------+-----------+---------------+-------+
+   | empId | FullName  | ManagerId | DateOfJoining | City  |
+   +-------+-----------+-----------+---------------+-------+
+   |   333 | Ankit Sah |         1 | 2020-01-01    | Patna |
+   +-------+-----------+-----------+---------------+-------+
+   1 row in set (0.00 sec)
+
+  4. Write an SQL query to find the maximum, minimum, and average salary of the employees.
+   mysql> select * from employeedetails a Inner join employeesalary s on a.empid=s.empid and s.salary= (select max(salary)from employeesalary);
+   +-------+--------------+-----------+---------------+-----------+-------+---------+--------+----------+
+   | empId | FullName     | ManagerId | DateOfJoining | City      | empId | project | Salary | Variable |
+   +-------+--------------+-----------+---------------+-----------+-------+---------+--------+----------+
+   |   421 | Kuldeep Rana |       876 | 2016-11-27    | New Delhi |   421 | p1      |  12000 |        0 |
+   +-------+--------------+-----------+---------------+-----------+-------+---------+--------+----------+
+   1 row in set (0.00 sec)
+
+   mysql> select * from employeedetails a Inner join employeesalary s on a.empid=s.empid and s.salary= (select min(salary)from employeesalary);
+   +-------+-----------+-----------+---------------+---------+-------+---------+--------+----------+
+   | empId | FullName  | ManagerId | DateOfJoining | City    | empId | project | Salary | Variable |
+   +-------+-----------+-----------+---------------+---------+-------+---------+--------+----------+
+   |   121 | John Show |       321 | 2014-01-31    | Toronto |   121 | p1      |   8000 |      500 |
+   +-------+-----------+-----------+---------------+---------+-------+---------+--------+----------+
+   1 row in set (0.00 sec)
+
+   mysql> select * from employeedetails a Inner join employeesalary s on a.empid=s.empid and s.salary= (select ave(salary)from employeesalary);
+   ERROR 1305 (42000): FUNCTION org.ave does not exist
+   mysql> select * from employeedetails a Inner join employeesalary s on a.empid=s.empid and s.salary= (select avg(salary)from employeesalary);
+   +-------+--------------+-----------+---------------+------------+-------+---------+--------+----------+
+   | empId | FullName     | ManagerId | DateOfJoining | City       | empId | project | Salary | Variable |
+   +-------+--------------+-----------+---------------+------------+-------+---------+--------+----------+
+   |   321 | Walter White |       986 | 2015-01-30    | California |   321 | p2      |  10000 |     1000 |
+   +-------+--------------+-----------+---------------+------------+-------+---------+--------+----------+
+   1 row in set (0.00 sec)
+
+  5. Fetch all the employees who are not working on any project.
+   mysql> select * from employeedetails d inner join employeesalary p on d.empid=p.empid and p.project=null;
+   Empty set (0.03 sec)
+
+   mysql>

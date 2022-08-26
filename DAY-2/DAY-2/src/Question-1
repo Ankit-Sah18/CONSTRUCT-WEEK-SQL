@@ -1,0 +1,22 @@
+
+
+mysql> create table person(id int PRIMARY KEY, Email varchar(20));
+Query OK, 0 rows affected (0.36 sec)
+
+
+mysql> insert into person values(1,"a@b.com"),
+    -> (2,"c@d.com"),
+    -> (3,"a@b.com");
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from person where email>1;
+Empty set, 3 warnings (0.01 sec)
+
+mysql> select email from person group by email having count(email)>1;
++---------+
+| email   |
++---------+
+| a@b.com |
++---------+
+1 row in set (0.01 sec)
